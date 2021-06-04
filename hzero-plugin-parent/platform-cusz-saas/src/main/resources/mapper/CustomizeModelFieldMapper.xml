@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeModelFieldMapper">
+
+    <resultMap id="BaseResultMap" type="org.hzero.plugin.platform.customize.domain.entity.ModelField">
+        <id column="field_id" property="fieldId" jdbcType="BIGINT"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="model_id" property="modelId"/>
+        <result column="field_code" property="fieldCode"/>
+        <result column="field_name" property="fieldName"/>
+        <result column="field_type" property="fieldType"/>
+        <result column="field_default_value" property="defaultValue"/>
+        <result column="field_not_null" property="notNull"/>
+        <result column="field_category" property="fieldCategory"/>
+        <result column="field_multi_lang" property="fieldMultiLang"/>
+        <result column="object_version_number" property="objectVersionNumber"/>
+        <association property="wdg" javaType="org.hzero.plugin.platform.customize.domain.entity.ModelFieldWidget">
+            <id property="id" column="id"/>
+            <result property="fieldId" column="line_field_id"/>
+            <result property="tenantId" column="tenant_id"/>
+            <result property="fieldWidget" column="field_widget"/>
+            <result property="textMaxLength" column="text_max_length"/>
+            <result property="sourceCode" column="source_code"/>
+            <result property="numberDecimal" column="number_precision"/>
+            <result property="numberMax" column="number_max"/>
+            <result property="numberMin" column="number_min"/>
+            <result property="dateFormat" column="date_format"/>
+            <result property="bucketName" column="bucket_name"/>
+            <result property="bucketDirectory" column="bucket_directory"/>
+            <result property="textAreaMaxLine" column="text_area_max_line"/>
+            <result property="linkTitle" column="link_title"/>
+            <result property="linkHref" column="link_href"/>
+            <result property="linkNewWindow" column="link_new_window"/>
+            <result property="defaultValue" column="default_value"/>
+            <result property="objectVersionNumber" column="line_object_version_number" jdbcType="DECIMAL"/>
+        </association>
+    </resultMap>
+
+    <select id="selectFieldAndWdg" resultType="org.hzero.plugin.platform.customize.domain.entity.ModelField">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        hmfp.id field_id,
+        hmfp.model_object_id model_id,
+        hmfp.tenant_id tenant_id,
+        hmfp.data_type field_type,
+        hmfp.field_type field_category,
+        hmfp.field_name field_code,
+        hmfp.display_name field_name,
+        hmfp.multi_language_flag field_multi_lang,
+        hmfp.default_value default_value,
+        hmfp.required_flag not_null,
+        hmfp.primary_flag field_primary_key,
+        hcmfw.id "wdg.id",
+        hcmfw.field_widget "wdg.field_widget",
+        hcmfw.source_code "wdg.source_code",
+        hcmfw.text_max_length "wdg.text_max_length",
+        hcmfw.text_min_length "wdg.text_min_length",
+        hcmfw.text_area_max_line "wdg.text_area_max_line",
+        hcmfw.date_format "wdg.date_format",
+        hcmfw.number_precision "wdg.number_decimal",
+        hcmfw.number_min "wdg.number_min",
+        hcmfw.number_max "wdg.number_max",
+        hcmfw.bucket_name "wdg.bucket_name",
+        hcmfw.bucket_directory "wdg.bucket_directory",
+        hcmfw.link_title "wdg.link_title",
+        hcmfw.link_href "wdg.link_href",
+        hcmfw.link_new_window "wdg.link_new_window",
+        hcmfw.default_value "wdg.default_value",
+        hcmfw.object_version_number "wdg.object_version_number"
+        from hmde_model_field_pub hmfp
+        left join hpfm_cusz_model_field_wdg hcmfw on hcmfw.field_id=hmfp.id
+        where hmfp.model_object_id=#{modelId}
+        <if test="fieldCode!=null and ''!=fieldCode">
+            <bind name="fieldCodeLike" value="'%'+fieldCode+'%'"/>
+            and hmfp.field_name like #{fieldCodeLike}
+        </if>
+        <if test="fieldName!=null and ''!=fieldName">
+            <bind name="fieldNameLike" value="'%'+fieldName+'%'"/>
+            and hmfp.display_name like #{fieldNameLike}
+        </if>
+        order by hmfp.id asc
+    </select>
+
+    <select id="selectUnConfigByModelId" resultMap="BaseResultMap">
+        SELECT
+        hmfp.id field_id,
+        hmfp.model_object_id model_id,
+        hmfp.required_flag field_not_null,
+        hmfp.field_type field_category,
+        hmfp.data_type field_type,
+        hmfp.field_name field_code,
+        hmfp.display_name field_name,
+        hmfp.default_value field_default_value,
+        hmfp.multi_language_flag field_multi_lang,
+        hcmfw.field_widget,
+        hcmfw.date_format,
+        hcmfw.number_precision,
+        hcmfw.number_max,
+        hcmfw.number_min,
+        hcmfw.bucket_name,
+        hcmfw.bucket_directory,
+        hcmfw.source_code,
+        hcmfw.text_max_length,
+        hcmfw.text_area_max_line,
+        hcmfw.link_title ,
+        hcmfw.link_href,
+        hcmfw.link_new_window,
+        hcmfw.default_value
+        FROM
+        hmde_model_field_pub hmfp
+        LEFT JOIN hpfm_cusz_model_field_wdg hcmfw ON hcmfw.field_id = hmfp.id
+        WHERE
+        hmfp.model_object_id=#{field.modelId}
+        <if test="field.fieldCode!=null and ''!=field.fieldCode">
+            <bind name="fieldCodeLike" value="'%'+field.fieldCode+'%'"/>
+            and hmfp.field_name like #{fieldCodeLike}
+        </if>
+        <if test="field.fieldName!=null and ''!=field.fieldName">
+            <bind name="fieldNameLike" value="'%'+field.fieldName+'%'"/>
+            and hmfp.display_name like #{fieldNameLike}
+        </if>
+        and
+        not exists(select 1 from hpfm_cusz_config_field hccf where hccf.field_id = hmfp.id
+        and hccf.tenant_id = #{tenantId}
+        and hccf.user_id = -1
+        and hccf.model_id=#{field.modelId} and hccf.unit_id=#{unitId} )
+        and
+        not exists (select 1 from hpfm_cusz_unit_field hcuf where hcuf.field_id=hmfp.id and hcuf.unit_id= #{unitId})
+    </select>
+
+    <select id="selectAllFieldWithWdg" resultType="org.hzero.plugin.platform.customize.domain.entity.ModelField">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        hmfp.id field_id,
+        hmfp.tenant_id tenant_id,
+        hmfp.model_object_id model_id,
+        hmfp.field_type field_category,
+        hmfp.field_name field_code,
+        hmfp.display_name field_name,
+        hmfp.default_value default_value,
+        hmfp.required_flag not_null,
+        hmfp.data_type field_type,
+        hmfp.multi_language_flag field_multiLang,
+        hcmfw.id "wdg.id",
+        hcmfw.field_widget "wdg.field_widget",
+        hcmfw.source_code "wdg.source_code",
+        hcmfw.text_max_length "wdg.text_max_length",
+        hcmfw.text_min_length "wdg.text_min_length",
+        hcmfw.text_area_max_line "wdg.text_area_max_line",
+        hcmfw.date_format "wdg.date_format",
+        hcmfw.number_precision "wdg.number_decimal",
+        hcmfw.number_min "wdg.number_min",
+        hcmfw.number_max "wdg.number_max",
+        hcmfw.bucket_name "wdg.bucket_name",
+        hcmfw.bucket_directory "wdg.bucket_directory",
+        hcmfw.link_title "wdg.link_title",
+        hcmfw.link_href "wdg.link_href",
+        hcmfw.link_new_window "wdg.link_new_window",
+        hcmfw.default_value "wdg.default_value",
+        hcmfw.object_version_number "wdg.object_version_number"
+        from hmde_model_field_pub hmfp
+        join hmde_model_object_pub hmop on hmop.id = hmfp.model_object_id
+        left join hpfm_cusz_model_field_wdg hcmfw on hcmfw.field_id=hmfp.id
+        where hmop.app_id = -1
+    </select>
+
+</mapper>

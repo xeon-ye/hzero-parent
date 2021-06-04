@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.hzero.route.DynamicRouteAutoConfiguration,\
+org.hzero.route.RibbonMetadataParserAutoConfiguration,\
+org.hzero.route.RibbonAutoConfiguration

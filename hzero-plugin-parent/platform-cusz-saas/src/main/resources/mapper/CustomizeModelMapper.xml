@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeModelMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <select id="selectByOption" resultType="org.hzero.plugin.platform.customize.domain.entity.Model">
+        select
+        hmop.id model_id,
+        hmop.code model_code,
+        hmop.name model_name,
+        hmop.tenant_id tenant_id,
+        hmop.ref_table_name model_table,
+        hmop.ref_service_name service_name,
+        hmop.primary_key primary_key,
+        hmop.multi_language_flag support_multi_lang
+        from hmde_model_object_pub hmop
+        <where>
+            <if test="modelCode!=null and ''!=modelCode">
+                <bind name="modelCodeLike" value="'%'+modelCode+'%'"/>
+                and hmop.code like #{modelCodeLike}
+            </if>
+            <if test="modelName!=null and ''!=modelName">
+                <bind name="modelNameLike" value="'%'+modelName+'%'"/>
+                and hmop.name like #{modelNameLike}
+            </if>
+            <if test="modelTable!=null and ''!=modelTable">
+                <bind name="modelTableLike" value="'%'+modelTable+'%'"/>
+                and hmop.ref_table_name like #{modelTableLike}
+            </if>
+            and hmop.app_id = -1
+        </where>
+    </select>
+
+</mapper>

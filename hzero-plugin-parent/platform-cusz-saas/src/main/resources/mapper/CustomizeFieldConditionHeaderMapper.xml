@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeFieldConditionHeaderMapper">
+
+    <resultMap id="BaseResultMap" type="org.hzero.plugin.platform.customize.domain.entity.FieldConditionHeader">
+        <id property="conHeaderId" column="con_header_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="configFieldId" column="config_field_id"/>
+        <result property="conType" column="con_type"/>
+        <result property="conExpression" column="con_expression"/>
+        <collection property="lines" ofType="org.hzero.plugin.platform.customize.domain.entity.FieldConditionLine">
+            <id column="con_line_id" property="conLineId"/>
+            <result column="con_code" property="conCode"/>
+            <result column="line_con_expression" property="conExpression"/>
+            <result column="source_unit_id" property="sourceUnitId"/>
+            <result column="source_unit_code" property="sourceUnitCode"/>
+            <result column="source_unit_name" property="sourceUnitName"/>
+            <result column="source_model_id" property="sourceModelId"/>
+            <result column="source_field_id" property="sourceFieldId"/>
+            <result column="source_field_code" property="sourceFieldCode"/>
+            <result column="source_field_name" property="sourceFieldName"/>
+            <result column="source_field_widget" property="sourceFieldWidget"/>
+            <result column="source_field_value_code" property="sourceFieldValueCode"/>
+            <result column="target_unit_id" property="targetUnitId"/>
+            <result column="target_unit_code" property="targetUnitCode"/>
+            <result column="target_model_id" property="targetModelId"/>
+            <result column="target_field_id" property="targetFieldId"/>
+            <result column="target_field_code" property="targetFieldCode"/>
+            <result column="target_field_name" property="targetFieldName"/>
+            <result column="target_type" property="targetType"/>
+            <result column="target_value" property="targetValue"/>
+            <result column="target_value_meaning" property="targetValueMeaning"/>
+        </collection>
+        <collection property="valids" ofType="org.hzero.plugin.platform.customize.domain.entity.FieldConditionValid">
+            <id column="con_valid_id" property="conValidId"/>
+            <result column="valid_tenant_id" property="tenantId"/>
+            <result column="valid_con_header_id" property="conHeaderId"/>
+            <result column="valid_con_expression" property="conExpression"/>
+            <result column="error_message" property="errorMessage"/>
+            <result column="valid_con_code" property="conCode"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectByConfigFieldId" resultMap="BaseResultMap">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        hcfch.*,
+        hcfcl.con_line_id,
+        hcfcl.con_code,
+        hcfcl.con_expression line_con_expression,
+        hcfcl.source_unit_id,
+        hcu1.unit_code source_unit_code,
+        hcu1.unit_name source_unit_name,
+        hcfcl.source_model_id,
+        hcfcl.source_field_id,
+
+        hcfcl.target_unit_id,
+        hcu2.unit_code target_unit_code,
+        hcfcl.target_model_id,
+        hcfcl.target_field_id,
+
+        hcfcl.target_type,
+        hcfcl.target_value,
+        hcfcl.target_value_meaning
+        <if test="needConValid">
+            ,hcfcv.con_valid_id,
+            hcfcv.con_code valid_con_code,
+            hcfcv.con_expression valid_con_expression,
+            hcfcvt.error_message
+        </if>
+        from hpfm_cusz_field_con_header hcfch
+        left join hpfm_cusz_field_con_line hcfcl on hcfcl.con_header_id=hcfch.con_header_id
+        <if test="needConValid">
+            left join hpfm_cusz_field_con_valid hcfcv on hcfcv.con_header_id=hcfch.con_header_id
+            left join hpfm_cusz_field_con_valid_tl hcfcvt on (hcfcv.con_valid_id=hcfcvt.con_valid_id and hcfcvt.lang=#{lang})
+        </if>
+        left join hpfm_cusz_unit hcu1 on hcu1.id=hcfcl.source_unit_id
+        left join hpfm_cusz_unit hcu2 on hcu2.id=hcfcl.target_unit_id
+        <where>
+            hcfch.config_field_id in
+            <foreach collection="configFieldIds" index="index" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+            <if test="conTypes!=null">
+                and hcfch.con_type in
+                <foreach collection="conTypes" index="index" item="conType" open="(" close=")" separator=",">
+                    #{conType}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAllConditions" resultMap="BaseResultMap">
+        select
+        hcfch.*,
+        hcfcl.con_line_id,
+        hcfcl.con_code,
+        hcfcl.con_expression,
+        hcfcl.source_unit_id,
+        hcfcl.source_model_id,
+        hcfcl.source_field_id,
+        hcfcl.target_unit_id,
+        hcfcl.target_model_id,
+        hcfcl.target_field_id,
+        hcfcl.target_type,
+        hcfcl.target_value
+        from hpfm_cusz_field_con_header hcfch
+        left join hpfm_cusz_field_con_line hcfcl on hcfcl.con_header_id=hcfch.con_header_id
+        where hcfch.config_field_id in
+        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+
+</mapper>

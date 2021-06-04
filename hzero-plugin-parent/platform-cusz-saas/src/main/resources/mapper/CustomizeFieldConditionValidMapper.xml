@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeFieldConditionValidMapper">
+
+    <resultMap id="tlMap" type="org.hzero.plugin.platform.customize.api.dto.FieldConValidTlDTO">
+        <id column="con_valid_id" property="conValidId"/>
+        <result column="config_field_id" property="configFieldId"/>
+        <collection property="tlMaps" ofType="java.util.Map">
+            <result property="lang" column="lang"/>
+            <result property="errorMessage" column="error_message"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectValidTl" resultMap="tlMap">
+        select
+        hcfcvt.*,
+        hcfch.config_field_id
+        from
+        hpfm_cusz_field_con_valid hcfcv
+        left join hpfm_cusz_field_con_valid_tl hcfcvt on hcfcvt.con_valid_id=hcfcv.con_valid_id
+        left join hpfm_cusz_field_con_header hcfch on hcfch.con_header_id=hcfcv.con_header_id
+        where hcfcv.con_valid_id in
+        <foreach collection="validIds" index="index" item="conValidId" open="(" close=")" separator=",">
+            #{conValidId}
+        </foreach>
+    </select>
+
+
+</mapper>

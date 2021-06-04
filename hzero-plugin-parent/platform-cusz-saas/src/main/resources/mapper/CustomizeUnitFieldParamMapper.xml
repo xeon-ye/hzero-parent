@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeUnitFieldParamMapper">
+
+    <select id="selectByUnitFieldIds" resultType="org.hzero.plugin.platform.customize.domain.entity.UnitFieldParam">
+        select
+        hcufp.*
+        from
+        hpfm_cusz_unit_field_par hcufp
+        where hcufp.unit_field_id in
+        <foreach collection="unitFieldIds" index="index" item="unitFieldId" open="(" close=")" separator=",">
+            #{unitFieldId}
+        </foreach>
+
+    </select>
+
+</mapper>

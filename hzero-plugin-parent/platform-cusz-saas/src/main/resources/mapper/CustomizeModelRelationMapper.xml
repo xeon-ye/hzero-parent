@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeModelRelationMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <select id="selectRelations" resultType="org.hzero.plugin.platform.customize.domain.entity.ModelRelation">
+      select
+	hmrp.id,
+	hcm1.id "master_model_id",
+	hcm2.id "slave_model_id",
+	hcmf1.id "master_field_id" ,
+	hcmf2.id "slave_field_id",
+	hmrp.relation_type "relation",
+	hcm1.code master_model_code,
+	hcm1.name master_model_name,
+	hcm1.ref_table_name master_table_name,
+	hcm2.code slave_model_code,
+	hcm2.name slave_model_name,
+	hcm2.ref_table_name slave_table_name,
+	hcmf1.field_name master_field_code,
+	hcmf1.display_name master_field_name,
+	hcmf2.field_name slave_field_code,
+	hcmf2.display_name slave_field_name
+    from
+	hmde_model_relation_pub hmrp
+	join hmde_mod_rel_field_pub hmrfp on hmrp.id = hmrfp.relation_id
+	left join hmde_model_object_pub hcm1 on hcm1.code = hmrp.master_model_object_code
+	left join hmde_model_object_pub hcm2 on hcm2.code = hmrp.relation_model_object_code
+	left join hmde_model_field_pub hcmf1 on hcmf1.code = hmrfp.master_model_field_code
+	left join hmde_model_field_pub hcmf2 on hcmf2.code = hmrfp.relation_model_field_code
+    where
+	hmrp.master_model_object_code =#{modelCode}
+	or hmrp.relation_model_object_code =#{modelCode}
+    </select>
+
+
+    <select id="selectAllRelations" resultType="org.hzero.plugin.platform.customize.domain.entity.ModelRelation">
+    select
+	hmrp.id,
+	hcm1.id "master_model_id",
+	hcm2.id "slave_model_id",
+	hmrp.relation_type "relation"
+    from
+	hmde_model_relation_pub hmrp
+	join hmde_model_object_pub hcm1 on hcm1.code = hmrp.master_model_object_code
+	join hmde_model_object_pub hcm2 on hcm2.code = hmrp.relation_model_object_code
+	where hcm1.app_id = -1 and hcm2.app_id = -1
+    </select>
+
+</mapper>

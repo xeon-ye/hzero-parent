@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeConfigMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="org.hzero.plugin.platform.customize.domain.entity.Config">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="tenantId" property="tenantId" jdbcType="BIGINT"/>
+        <result column="unit_title" property="unitTitle" jdbcType="VARCHAR"/>
+        <result column="object_version_number" property="objectVersionNumber" jdbcType="DECIMAL"/>
+        <result column="creation_date" property="creationDate" jdbcType="DATE"/>
+        <result column="created_by" property="createdBy" jdbcType="DECIMAL"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="DECIMAL"/>
+        <result column="last_update_date" property="lastUpdateDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <resultMap id="UnitConfigResultMap" type="org.hzero.plugin.platform.customize.api.dto.UnitConfigFieldDTO">
+        <id column="field_code" property="fieldCode"/>
+        <result column="field_name" property="fieldName"/>
+        <result column="field_alias" property="fieldAlias"/>
+        <result column="render_options" property="renderOptions"/>
+        <result column="field_required" property="required" javaType="boolean"/>
+        <result column="field_editable" property="editable" javaType="boolean"/>
+        <result column="grid_seq" property="seq"/>
+        <result column="field_category" property="fieldCategory"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="form_col" property="formCol"/>
+        <result column="form_row" property="formRow"/>
+        <result column="grid_fixed" property="gridFixed"/>
+        <result column="grid_width" property="gridWidth"/>
+        <result column="field_visible" property="fieldVisible"/>
+        <result column="source_code" property="lovCode"/>
+        <result column="field_widget" property="fieldType"/>
+        <result column="text_max_length" property="textMaxLength"/>
+        <result column="text_min_length" property="textMinLength"/>
+        <result column="source_code" property="lovCode"/>
+        <result column="date_format" property="dateFormat"/>
+        <result column="number_precision" property="numberPrecision"/>
+        <result column="number_min" property="numberMin"/>
+        <result column="number_max" property="numberMax"/>
+        <result column="text_area_max_line" property="textAreaMaxLine"/>
+        <result column="bucket_name" property="bucketName"/>
+        <result column="bucket_directory" property="bucketDirectory"/>
+        <result property="linkTitle" column="link_title"/>
+        <result property="linkHref" column="link_href"/>
+        <result property="linkNewWindow" column="link_new_window"/>
+        <result column="label_col" property="labelCol" />
+        <result column="wrapper_col" property="wrapperCol" />
+        <collection property="lovMappings" ofType="org.hzero.plugin.platform.customize.api.dto.UnitConfigFieldMappingDTO">
+            <result column="source_field" property="sourceCode"/>
+            <result column="target_field" property="targetCode"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectAllWithUnitCode" resultType="org.hzero.plugin.platform.customize.domain.entity.Config">
+        select
+        hcc.*,
+        hcc.form_page_size "pageSize",
+        hcu.unit_code
+--         hcu.read_only
+        from
+        hpfm_cusz_config hcc
+        left join hpfm_cusz_unit hcu on hcu.id=hcc.unit_id
+        where hcc.user_id = -1
+    </select>
+
+</mapper>

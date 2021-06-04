@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeConfigFieldMapper">
+
+    <resultMap id="BaseResultMap" type="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        <id property="configFieldId" column="config_field_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="fieldId" column="field_id"/>
+        <result property="modelId" column="model_id"/>
+        <result property="unitId" column="unit_id"/>
+        <result property="fieldName" column="field_name"/>
+        <result property="renderOptions" column="render_options"/>
+        <result property="fieldEditable" column="field_editable"/>
+        <result property="fieldAlias" column="field_alias"/>
+        <result property="fieldRequired" column="field_required"/>
+        <result property="visible" column="field_visible"/>
+        <result property="gridFixed" column="grid_fixed"/>
+        <result property="gridSeq" column="grid_seq"/>
+        <result property="gridWidth" column="grid_width"/>
+        <result property="formCol" column="form_col"/>
+        <result property="formRow" column="form_row"/>
+        <result property="labelCol" column="label_col"/>
+        <result property="wrapperCol" column="wrapper_col"/>
+        <result property="whereOption" column="where_option"/>
+        <result column="object_version_number" property="objectVersionNumber" jdbcType="DECIMAL"/>
+        <association property="field" javaType="org.hzero.plugin.platform.customize.domain.entity.ModelField">
+            <id property="fieldId" column="line1_field_id"/>
+            <result property="tenantId" column="line1_tenant_id"/>
+            <result property="fieldCode" column="line_field_code"/>
+            <result property="fieldCategory" column="field_category"/>
+            <result property="fieldType" column="field_type"/>
+            <result property="fieldMultiLang" column="field_multi_lang"/>
+            <result property="fieldCode" column="field_code"/>
+            <result property="defaultValue" column="field_default_value"/>
+            <result property="notNull" column="field_not_null"/>
+            <result property="modelCode" column="model_code"/>
+            <result property="modelName" column="model_name"/>
+            <result column="line1_object_version_number" property="objectVersionNumber" jdbcType="DECIMAL"/>
+        </association>
+        <association property="widget" javaType="org.hzero.plugin.platform.customize.domain.entity.ConfigFieldWidget">
+            <id property="id" column="widget_id"/>
+            <result property="fieldWidget" column="field_widget"/>
+            <result property="textMaxLength" column="text_max_length"/>
+            <result property="textMinLength" column="text_min_length"/>
+            <result property="sourceCode" column="source_code"/>
+            <result property="numberDecimal" column="number_precision"/>
+            <result property="numberMin" column="number_min"/>
+            <result property="numberMax" column="number_max"/>
+            <result property="dateFormat" column="date_format"/>
+            <result property="bucketName" column="bucket_name"/>
+            <result property="bucketDirectory" column="bucket_directory"/>
+            <result property="linkTitle" column="link_title"/>
+            <result property="linkHref" column="link_href"/>
+            <result property="linkNewWindow" column="link_new_window"/>
+            <result property="defaultValue" column="default_value"/>
+            <result column="line2_object_version_number" property="objectVersionNumber" jdbcType="DECIMAL"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="initCacheResultMap" type="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        <id property="configFieldId" column="config_field_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="fieldId" column="field_id"/>
+        <result property="modelId" column="model_id"/>
+        <result property="unitId" column="unit_id"/>
+        <result property="fieldName" column="field_name"/>
+        <result property="renderOptions" column="render_options"/>
+        <result property="fieldEditable" column="field_editable"/>
+        <result property="fieldAlias" column="field_alias"/>
+        <result property="fieldCode" column="field_code"/>
+        <result property="renderRule" column="render_rule"/>
+        <result property="fieldRequired" column="field_required"/>
+        <result property="visible" column="field_visible"/>
+        <result property="gridFixed" column="grid_fixed"/>
+        <result property="gridSeq" column="grid_seq"/>
+        <result property="gridWidth" column="grid_width"/>
+        <result property="formCol" column="form_col"/>
+        <result property="formRow" column="form_row"/>
+        <result property="unitCode" column="unit_code"/>
+        <result column="label_col" property="labelCol"/>
+        <result column="wrapper_col" property="wrapperCol"/>
+        <result column="where_option" property="whereOption"/>
+        <association property="field" javaType="org.hzero.plugin.platform.customize.domain.entity.ModelField">
+            <id property="fieldId" column="line1_field_id"/>
+            <result property="tenantId" column="line1_tenant_id"/>
+            <result property="fieldCategory" column="field_category"/>
+            <result property="fieldType" column="field_type"/>
+            <result property="fieldMultiLang" column="field_multi_lang"/>
+            <result property="fieldCode" column="field_code"/>
+            <result property="defaultValue" column="field_default_value"/>
+            <result property="notNull" column="field_not_null"/>
+            <result property="modelCode" column="model_code"/>
+            <result property="modelName" column="model_name"/>
+        </association>
+        <association property="widget" javaType="org.hzero.plugin.platform.customize.domain.entity.ConfigFieldWidget">
+            <id property="id" column="widget_id"/>
+            <result property="tenantId" column="widget_tenant_id"/>
+            <result property="fieldWidget" column="field_widget"/>
+            <result property="textMaxLength" column="text_max_length"/>
+            <result property="textMinLength" column="text_min_length"/>
+            <result property="sourceCode" column="source_code"/>
+            <result property="numberDecimal" column="number_precision"/>
+            <result property="numberMin" column="number_min"/>
+            <result property="numberMax" column="number_max"/>
+            <result property="dateFormat" column="date_format"/>
+            <result property="bucketName" column="bucket_name"/>
+            <result property="bucketDirectory" column="bucket_directory"/>
+            <result property="textAreaMaxLine" column="text_area_max_line"/>
+            <result property="textAreaMaxLine" column="text_area_max_line"/>
+            <result property="linkTitle" column="link_title"/>
+            <result property="linkHref" column="link_href"/>
+            <result property="linkNewWindow" column="link_new_window"/>
+            <result property="defaultValue" column="default_value"/>
+            <result property="multipleFlag" column="multiple_flag"/>
+        </association>
+        <collection property="fieldLovMaps" ofType="org.hzero.plugin.platform.customize.domain.entity.ConfigFieldMap">
+            <result property="id" column="lov_map_id"/>
+            <result property="tenantId" column="lov_map_tenant_id"/>
+            <result property="configFieldId" column="lov_map_config_field_id"/>
+            <result property="targetFieldId" column="lov_map_target_field_id"/>
+            <result property="sourceModelId" column="lov_map_source_model_id"/>
+            <result property="sourceFieldId" column="lov_map_source_field_id"/>
+            <result property="sourceFieldAlias" column="lov_map_source_field_alias"/>
+        </collection>
+        <collection property="tlMaps" ofType="java.util.Map">
+            <result property="lang" column="tl_lang"/>
+            <result property="fieldName" column="tl_field_name"/>
+        </collection>
+    </resultMap>
+    <update id="updateFieldAliasByUnitField">
+        update hpfm_cusz_config_field set field_alias =  #{fieldAlias}
+        where  field_id = #{fieldId} and  unit_id = #{unitId}
+    </update>
+    <delete id="deleteConfigFieldTl">
+        delete from hpfm_cusz_config_field_tl
+        where config_field_id in
+        <foreach collection="list" index="index" item="configFieldIds" open="(" close=")" separator=",">
+            #{configFieldIds}
+        </foreach>
+    </delete>
+
+    <resultMap id="RelatedUnitMap" type="org.hzero.plugin.platform.customize.api.dto.UnitRelatedDTO">
+        <id property="unitId" column="unit_id"/>
+        <result property="unitCode" column="unit_code"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="unitType" column="unit_type"/>
+        <collection property="unitFields" ofType="org.hzero.plugin.platform.customize.api.dto.UnitFieldCompositeDTO">
+            <id property="modelFieldId" column="model_field_id"/>
+            <result property="configFieldId" column="config_field_id"/>
+            <result property="modelId" column="model_id"/>
+            <result property="unitFieldCode" column="unit_field_code"/>
+            <result property="unitFieldName" column="unit_field_name"/>
+            <result property="widgetType" column="widget_type"/>
+            <result property="sourceFieldValueCode" column="source_field_value_code"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectById" resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        select
+        hccf.config_field_id,
+        hccf.model_id,
+        hccf.unit_id,
+        hccf.field_id,
+        hccf.tenant_id,
+        hccf.field_code,
+        hcu.unit_code
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_unit hcu on hcu.id=hccf.unit_id
+        where hccf.config_field_id = #{id}
+    </select>
+
+    <select id="selectSimpleByUnitId" resultType="org.hzero.plugin.platform.customize.api.dto.ConfigFieldLovDTO">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        hccf.config_field_id,
+        hccf.unit_id,
+        hccf.field_id,
+        hccf.render_options,
+        hccf.field_name,
+        hccf.field_code,
+        hccf.model_id,
+        hcm.name "model_name" ,
+        hcm.code "model_code"
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_config_field_tl hccft on hccft.config_field_id=hccf.config_field_id and hccft.lang=#{lang}
+        left join hmde_model_object_pub hcm on hcm.id=hccf.model_id
+        where
+        hccf.unit_id=#{unitId}
+        and hccf.user_id = -1 and hccf.tenant_id = #{tenantId}
+        <if test="field.fieldCode!=null and ''!=field.fieldCode">
+            <bind name="fieldCodeLike" value="'%'+field.fieldCode+'%'"/>
+            and hccf.field_code like #{fieldCodeLike}
+        </if>
+        <if test="field.fieldName!=null and ''!=field.fieldName">
+            <bind name="fieldNameLike" value="'%'+field.fieldName+'%'"/>
+            and hccf.field_name like #{fieldNameLike}
+        </if>
+        <if test="field.modelName!=null and ''!=field.modelName">
+            <bind name="modelNameLike" value="'%'+field.modelName+'%'"/>
+            and hcm.name like #{modelNameLike}
+        </if>
+    </select>
+
+    <select id="selectConfigFieldByUnitId" resultMap="initCacheResultMap">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        hccf.user_id,
+        hccf.config_field_id,
+        hccf.tenant_id ,
+        hccf.unit_id,
+        hccf.model_id,
+        hccf.field_id,
+        hccft.field_name,
+        hccf.field_editable,
+        hccf.field_required,
+        hccf.grid_seq,
+        hccf.grid_width,
+        hccf.grid_fixed,
+        hccf.form_row,
+        hccf.form_col,
+        hccf.render_options,
+        hccf.field_alias,
+        hccf.field_visible,
+        hccf.label_col,
+        hccf.wrapper_col,
+        hcu.unit_code,
+        hccf.render_rule,
+        hccf.field_code ,
+        hccf.where_option,
+
+
+        hcmfw.tenant_id widget_tenant_id,
+        hcmfw.field_widget ,
+        hcmfw.text_area_max_line ,
+        hcmfw.text_max_length ,
+        hcmfw.text_min_length ,
+        hcmfw.bucket_name,
+        hcmfw.bucket_directory ,
+        hcmfw.date_format ,
+        hcmfw.number_precision ,
+        hcmfw.number_max ,
+        hcmfw.number_min,
+        hcmfw.source_code ,
+        hcmfw.id widget_id,
+        hcmfw.link_title,
+        hcmfw.link_href,
+        hcmfw.link_new_window,
+        hcmfw.default_value,
+        hcmfw.multiple_flag
+
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_config_field_wdg hcmfw on (hccf.config_field_id=hcmfw.config_field_id)
+        left join hpfm_cusz_config_field_tl hccft on hccf.config_field_id=hccft.config_field_id and hccft.lang=#{lang}
+        left join hpfm_cusz_unit hcu on hcu.id= hccf.unit_id
+        where hccf.unit_id=#{unitId} and hccf.tenant_id=#{tenantId} and hccf.user_id=-1
+    </select>
+
+    <select id="selectFieldTL" resultType="java.util.Map">
+        select
+        hccft.lang,
+        hccft.field_name fieldName
+        from
+        hpfm_cusz_config_field_tl hccft
+        where hccft.config_field_id=#{configFieldId}
+    </select>
+
+    <select id="selectByUnitIdAndFieldId" resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        select
+        hccf.*,
+        hcu.unit_code
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_unit hcu on hcu.id=hccf.unit_id
+        where
+        hccf.unit_id=#{unitId} and hccf.field_id=#{fieldId}
+        and hccf.user_id = -1
+        <if test="fieldCode != null">
+            and hccf.field_code=#{fieldCode}
+        </if>
+        <if test="tenantId != null">
+            and hccf.tenant_id=#{tenantId}
+        </if>
+    </select>
+    <select id="selectUserConfigField"
+            resultMap="initCacheResultMap">
+
+        select
+        hccf.user_id,
+        hccf.config_field_id,
+        hccf.tenant_id ,
+        hccf.unit_id,
+        hccf.model_id,
+        hccf.field_id,
+        hccf.field_name,
+        hccf.field_editable,
+        hccf.field_required,
+        hccf.grid_seq,
+        hccf.grid_width,
+        hccf.grid_fixed,
+        hccf.form_row,
+        hccf.form_col,
+        hccf.render_options,
+        hccf.field_alias,
+        hccf.field_code,
+        hccf.field_visible,
+        hccf.label_col,
+        hccf.wrapper_col,
+        hccft.lang "tl_lang",
+        hccft.field_name "tl_field_name"
+
+        from
+          hpfm_cusz_config_field hccf
+        left join hpfm_cusz_config_field_tl hccft on hccf.config_field_id=hccft.config_field_id
+        where
+          hccf.unit_id = #{unitId} and hccf.tenant_id = #{tenantId} and hccf.user_id = #{userId}
+    </select>
+
+    <select id="selectByUnitIdAndTenantId" resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        select
+        hccf.config_field_id,
+        hccf.unit_id,
+        hccf.field_alias,
+        hccf.model_id,
+        hccf.field_id,
+        hccfw.field_widget "widget.field_widget",
+        case when hccfw.field_widget in ('LOV','SELECT')
+        then hccfw.source_code
+        end "widget.source_code",
+        hccfw.default_value
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_config_field_wdg hccfw on hccfw.config_field_id=hccf.config_field_id
+        where hccf.tenant_id=#{tenantId} and hccf.unit_id in
+        <foreach collection="unitIds" index="index" item="unitId" open="(" close=")" separator=",">
+            #{unitId}
+        </foreach>
+    </select>
+
+    <select id="selectRelatedUnitAndField" resultMap="RelatedUnitMap">
+        select
+        hccf.config_field_id,
+        hccf.unit_id,
+        hcu.unit_code,
+        hcu.unit_name,
+        hcu.unit_type,
+        hccf.field_id model_field_id,
+        hccf.model_id,
+        hccfw.field_widget widget_type,
+        hccf.field_code unit_field_code,
+        hccf.field_name unit_field_name,
+        case when hccfw.source_code is not null
+        then hccfw.source_code
+        else hcmfw.source_code
+        end source_field_value_code,
+        hccfw.default_value
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_unit hcu on hcu.id = hccf.unit_id
+        left join hpfm_cusz_config_field_wdg hccfw on hccfw.config_field_id=hccf.config_field_id
+        left join hpfm_cusz_model_field_wdg hcmfw on hcmfw.field_id=hccf.field_id
+        where
+        hcu.unit_code in
+        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and hccf.tenant_id=#{tenantId} and (hccf.model_id !=-1 and hccf.field_id !=-1) and hccf.user_id=-1
+    </select>
+
+    <select id="selectWithAliasNotNullByTenantId"
+            resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        select
+        hccf.config_field_id,
+        hccf.unit_id,
+        hccf.field_id,
+        hccf.field_alias
+        from
+        hpfm_cusz_config_field hccf
+        where hccf.tenant_id=#{tenantId} and hccf.field_alias !=null
+    </select>
+
+    <select id="selectWithModelFieldByUnitCode" resultMap="initCacheResultMap">
+        select
+        hccf.config_field_id,
+        hccf.tenant_id ,
+        hccf.unit_id,
+        hccf.model_id,
+        hccf.field_id,
+        hccf.field_name,
+        hccf.field_editable,
+        hccf.field_required,
+        hccf.grid_seq,
+        hccf.grid_width,
+        hccf.grid_fixed,
+        hccf.form_row,
+        hccf.form_col,
+        hccf.render_options,
+        hccf.field_alias,
+        hccf.field_code,
+        hccf.field_visible,
+        hccf.label_col,
+        hccf.wrapper_col,
+        hccf.render_rule,
+        hccf.where_option,
+        hcu.unit_code,
+        hccft.lang "tl_lang",
+        hccft.field_name "tl_field_name",
+
+
+        hcmfw.tenant_id widget_tenant_id,
+        hcmfw.field_widget ,
+        hcmfw.text_area_max_line ,
+        hcmfw.text_max_length ,
+        hcmfw.text_min_length ,
+        hcmfw.bucket_name,
+        hcmfw.bucket_directory ,
+        hcmfw.date_format ,
+        hcmfw.number_precision ,
+        hcmfw.number_max ,
+        hcmfw.number_min,
+        hcmfw.source_code ,
+        hcmfw.id widget_id,
+        hcmfw.link_title,
+        hcmfw.link_href,
+        hcmfw.link_new_window,
+        hcmfw.default_value,
+        hcmfw.multiple_flag,
+
+        hccfm.id lov_map_id,
+        hccfm.tenant_id lov_map_tenant_id,
+        hccfm.config_field_id lov_map_config_field_id,
+        hccfm.target_field_id lov_map_target_field_id,
+        hccfm.source_model_id lov_map_source_model_id,
+        hccfm.source_field_id lov_map_source_field_id,
+        hccfm.source_field_alias lov_map_source_field_alias
+        from
+        hpfm_cusz_config_field hccf
+        left join hpfm_cusz_config_field_wdg hcmfw on (hccf.config_field_id=hcmfw.config_field_id)
+        left join hpfm_cusz_config_field_tl hccft on hccf.config_field_id=hccft.config_field_id
+        left join hpfm_cusz_config_field_map hccfm on hccf.config_field_id=hccfm.config_field_id
+        left join hpfm_cusz_unit hcu on hcu.id= hccf.unit_id
+        where hcu.unit_code=#{unitCode} and hccf.tenant_id=#{tenantId} and hccf.user_id=-1
+    </select>
+
+    <select id="selectAllUnitIdAndTenant" resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+
+        select unit_id ,tenant_id from hpfm_cusz_config_field where user_id = -1 group by unit_id,tenant_id
+
+    </select>
+
+
+    <select id="selectConfigFieldAndUnitCode"
+            resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigField">
+        select
+        hccf.*,
+        hcu.unit_code
+        from hpfm_cusz_config_field hccf
+        left join hpfm_cusz_unit hcu on hcu.id= hccf.unit_id
+        where hccf.config_field_id in
+        <foreach collection="list" index="index" item="configFieldIds" open="(" close=")" separator=",">
+            #{configFieldIds}
+        </foreach>
+    </select>
+
+    <select id="selectConfigModelFieldsByUnitId" resultType="org.hzero.boot.customize.dto.CustomizeConfigField">
+         SELECT
+            cf.model_id,cf.field_id,m.ref_table_name model_table_name,cmf.field_name field_code,cmf.field_type,cmf.field_type field_category,cf.field_alias,
+            cmf.multi_language_flag "supportMultiLang",cf.where_option,
+            CASE WHEN cfw.field_widget is not null
+            THEN cfw.field_widget
+            ELSE mfw.field_widget
+            END widgetType,
+            CASE WHEN cfw.field_widget is not null
+            THEN cfw.source_code
+            ELSE mfw.source_code
+            END valueSource
+         FROM
+           hpfm_cusz_config_field cf
+         JOIN hmde_model_object_pub m ON cf.model_id = m.id
+         JOIN hmde_model_field_pub cmf ON cf.field_id = cmf.id
+         LEFT JOIN hpfm_cusz_config_field_wdg cfw ON cfw.config_field_id = cf.config_field_id
+         LEFT JOIN hpfm_cusz_model_field_wdg mfw ON mfw.field_id = cf.field_id
+         WHERE
+           cf.unit_id = #{unitId} and cf.tenant_id = #{tenantId} and cf.user_id = -1 and cf.model_id != -1 and cf.field_id != -1
+    </select>
+
+</mapper>

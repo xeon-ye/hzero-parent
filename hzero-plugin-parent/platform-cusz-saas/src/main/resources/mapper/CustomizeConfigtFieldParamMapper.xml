@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeConfigFieldParamMapper">
+
+    <select id="selectByConfigFieldIds" resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigFieldParam">
+        select
+        hccfp.*,
+        hcu.unit_code param_unit_code,
+        hcu.unit_name param_unit_name
+        from
+        hpfm_cusz_config_field_par hccfp
+        left join  hpfm_cusz_unit hcu on hccfp.param_unit_id = hcu.id
+        where hccfp.config_field_id in
+        <foreach collection="configFieldIds" index="index" item="configFieldId" open="(" close=")" separator=",">
+            #{configFieldId}
+        </foreach>
+
+    </select>
+
+
+</mapper>

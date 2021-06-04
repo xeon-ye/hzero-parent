@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hzero-starter-call-core" />
+        <module name="hzero-starter-social-wechat" />
+        <module name="hzero-starter-file-minio" />
+        <module name="hzero-starter-seata" />
+        <module name="hzero-starter-file-obs" />
+        <module name="hzero-starter-config-client" />
+        <module name="hzero-boot-file" />
+        <module name="hzero-starter-social-wechat-enterprise" />
+        <module name="hzero-template-oauth-slide" />
+        <module name="hzero-report" />
+        <module name="hzero-starter-sso-idm" />
+        <module name="hzero-boot-import" />
+        <module name="hzero-starter-sqlparser" />
+        <module name="hzero-starter-fragment" />
+        <module name="hzero-starter-sms-core" />
+        <module name="hzero-starter-file-bos" />
+        <module name="hzero-starter-sms-baidu" />
+        <module name="hzero-starter-websocket" />
+        <module name="hzero-starter-integrate-core" />
+        <module name="hzero-boot-iam" />
+        <module name="hzero-starter-excel" />
+        <module name="hzero-import" />
+        <module name="hzero-starter-sms-aliyun" />
+        <module name="hzero-starter-file-cos" />
+        <module name="hzero-starter-sso-core" />
+        <module name="hzero-starter-redis" />
+        <module name="hzero-starter-file-azure" />
+        <module name="hzero-starter-feign-replay" />
+        <module name="hzero-register" />
+        <module name="hzero-starter-export" />
+        <module name="hzero-scheduler" />
+        <module name="hzero-gateway-helper-default" />
+        <module name="hzero-starter-metric" />
+        <module name="hzero-starter-apollo-config" />
+        <module name="hzero-starter-sso-cas" />
+        <module name="hzero-starter-sso-oauth" />
+        <module name="hzero-starter-file-core" />
+        <module name="hzero-boot-message" />
+        <module name="hzero-gateway-helper-api" />
+        <module name="hzero-starter-mybatis-mapper" />
+        <module name="hzero-starter-file-ceph" />
+        <module name="hzero-starter-lock" />
+        <module name="hzero-starter-sms-qcloud" />
+        <module name="hzero-starter-integrate-wechat-official" />
+        <module name="hzero-starter-file-aws" />
+        <module name="hzero-swagger" />
+        <module name="hzero-starter-file-aliyun" />
+        <module name="hzero-starter-file-jdcloud" />
+        <module name="hzero-starter-core" />
+        <module name="hzero-boot-admin" />
+        <module name="hzero-admin-saas" />
+        <module name="hzero-starter-social-apple" />
+        <module name="hzero-oauth" />
+        <module name="hzero-template-oauth-main" />
+        <module name="hzero-starter-social-qq" />
+        <module name="hzero-file" />
+        <module name="hzero-starter-sso-azure" />
+        <module name="hzero-iam" />
+        <module name="hzero-starter-social-hippius" />
+        <module name="hzero-starter-integrate-dd" />
+        <module name="hzero-gateway" />
+        <module name="hzero-boot-platform" />
+        <module name="platform-hr" />
+        <module name="hzero-starter-keyencrypt" />
+        <module name="hzero-boot-scheduler" />
+        <module name="hzero-platform" />
+        <module name="hzero-starter-register-event" />
+        <module name="hzero-boot-oauth" />
+        <module name="hzero-starter-integrate-wechat-enterprise" />
+        <module name="hzero-starter-social-sina" />
+        <module name="hzero-starter-social-core" />
+        <module name="hzero-starter-jdbc" />
+        <module name="hzero-starter-call-jingdong" />
+        <module name="hzero-gateway-helper-login" />
+        <module name="hzero-boot-report" />
+        <module name="hzero-message-saas" />
+        <module name="platform-cusz-saas" />
+        <module name="hzero-starter-dynamic-route" />
+        <module name="hzero-starter-sso-saml" />
+        <module name="hzero-starter-local-feign" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hzero-admin-saas" target="1.8" />
+      <module name="hzero-boot-admin" target="1.8" />
+      <module name="hzero-boot-file" target="1.8" />
+      <module name="hzero-boot-iam" target="1.8" />
+      <module name="hzero-boot-import" target="1.8" />
+      <module name="hzero-boot-message" target="1.8" />
+      <module name="hzero-boot-oauth" target="1.8" />
+      <module name="hzero-boot-parent" target="1.8" />
+      <module name="hzero-boot-platform" target="1.8" />
+      <module name="hzero-boot-report" target="1.8" />
+      <module name="hzero-boot-scheduler" target="1.8" />
+      <module name="hzero-file" target="1.8" />
+      <module name="hzero-gateway" target="1.8" />
+      <module name="hzero-gateway-helper" target="1.8" />
+      <module name="hzero-gateway-helper-api" target="1.8" />
+      <module name="hzero-gateway-helper-default" target="1.8" />
+      <module name="hzero-gateway-helper-login" target="1.8" />
+      <module name="hzero-iam" target="1.8" />
+      <module name="hzero-import" target="1.8" />
+      <module name="hzero-message-saas" target="1.8" />
+      <module name="hzero-oauth" target="1.8" />
+      <module name="hzero-parent" target="1.8" />
+      <module name="hzero-platform" target="1.8" />
+      <module name="hzero-plugin-parent" target="1.8" />
+      <module name="hzero-register" target="1.8" />
+      <module name="hzero-report" target="1.8" />
+      <module name="hzero-scheduler" target="1.8" />
+      <module name="hzero-starter-apollo-config" target="1.8" />
+      <module name="hzero-starter-call-core" target="1.8" />
+      <module name="hzero-starter-call-jingdong" target="1.8" />
+      <module name="hzero-starter-call-parent" target="1.8" />
+      <module name="hzero-starter-config-client" target="1.8" />
+      <module name="hzero-starter-core" target="1.8" />
+      <module name="hzero-starter-dynamic-route" target="1.8" />
+      <module name="hzero-starter-excel" target="1.8" />
+      <module name="hzero-starter-export" target="1.8" />
+      <module name="hzero-starter-feign-replay" target="1.8" />
+      <module name="hzero-starter-file-aliyun" target="1.8" />
+      <module name="hzero-starter-file-aws" target="1.8" />
+      <module name="hzero-starter-file-azure" target="1.8" />
+      <module name="hzero-starter-file-bos" target="1.8" />
+      <module name="hzero-starter-file-ceph" target="1.8" />
+      <module name="hzero-starter-file-core" target="1.8" />
+      <module name="hzero-starter-file-cos" target="1.8" />
+      <module name="hzero-starter-file-jdcloud" target="1.8" />
+      <module name="hzero-starter-file-minio" target="1.8" />
+      <module name="hzero-starter-file-obs" target="1.8" />
+      <module name="hzero-starter-file-parent" target="1.8" />
+      <module name="hzero-starter-fragment" target="1.8" />
+      <module name="hzero-starter-integrate-core" target="1.8" />
+      <module name="hzero-starter-integrate-dd" target="1.8" />
+      <module name="hzero-starter-integrate-parent" target="1.8" />
+      <module name="hzero-starter-integrate-wechat-enterprise" target="1.8" />
+      <module name="hzero-starter-integrate-wechat-official" target="1.8" />
+      <module name="hzero-starter-jdbc" target="1.8" />
+      <module name="hzero-starter-keyencrypt" target="1.8" />
+      <module name="hzero-starter-local-feign" target="1.8" />
+      <module name="hzero-starter-lock" target="1.8" />
+      <module name="hzero-starter-metric" target="1.8" />
+      <module name="hzero-starter-mybatis-mapper" target="1.8" />
+      <module name="hzero-starter-parent" target="1.8" />
+      <module name="hzero-starter-redis" target="1.8" />
+      <module name="hzero-starter-register-event" target="1.8" />
+      <module name="hzero-starter-seata" target="1.8" />
+      <module name="hzero-starter-sms-aliyun" target="1.8" />
+      <module name="hzero-starter-sms-baidu" target="1.8" />
+      <module name="hzero-starter-sms-core" target="1.8" />
+      <module name="hzero-starter-sms-parent" target="1.8" />
+      <module name="hzero-starter-sms-qcloud" target="1.8" />
+      <module name="hzero-starter-social-apple" target="1.8" />
+      <module name="hzero-starter-social-core" target="1.8" />
+      <module name="hzero-starter-social-hippius" target="1.8" />
+      <module name="hzero-starter-social-parent" target="1.8" />
+      <module name="hzero-starter-social-qq" target="1.8" />
+      <module name="hzero-starter-social-sina" target="1.8" />
+      <module name="hzero-starter-social-wechat" target="1.8" />
+      <module name="hzero-starter-social-wechat-enterprise" target="1.8" />
+      <module name="hzero-starter-sqlparser" target="1.8" />
+      <module name="hzero-starter-sso-azure" target="1.8" />
+      <module name="hzero-starter-sso-cas" target="1.8" />
+      <module name="hzero-starter-sso-core" target="1.8" />
+      <module name="hzero-starter-sso-idm" target="1.8" />
+      <module name="hzero-starter-sso-oauth" target="1.8" />
+      <module name="hzero-starter-sso-parent" target="1.8" />
+      <module name="hzero-starter-sso-saml" target="1.8" />
+      <module name="hzero-starter-websocket" target="1.8" />
+      <module name="hzero-swagger" target="1.8" />
+      <module name="hzero-template-oauth-main" target="1.8" />
+      <module name="hzero-template-oauth-slide" target="1.8" />
+      <module name="hzero-template-parent" target="1.8" />
+      <module name="platform-cusz-saas" target="1.8" />
+      <module name="platform-hr" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hzero-admin-saas" options="-parameters" />
+      <module name="hzero-boot-admin" options="-parameters" />
+      <module name="hzero-boot-file" options="-parameters" />
+      <module name="hzero-boot-iam" options="-parameters" />
+      <module name="hzero-boot-import" options="-parameters" />
+      <module name="hzero-boot-message" options="-parameters" />
+      <module name="hzero-boot-oauth" options="-parameters" />
+      <module name="hzero-boot-platform" options="-parameters" />
+      <module name="hzero-boot-report" options="-parameters" />
+      <module name="hzero-boot-scheduler" options="-parameters" />
+      <module name="hzero-file" options="-parameters" />
+      <module name="hzero-gateway" options="-parameters" />
+      <module name="hzero-gateway-helper-api" options="-parameters" />
+      <module name="hzero-gateway-helper-default" options="-parameters" />
+      <module name="hzero-gateway-helper-login" options="-parameters" />
+      <module name="hzero-iam" options="-parameters" />
+      <module name="hzero-import" options="-parameters" />
+      <module name="hzero-message-saas" options="-parameters" />
+      <module name="hzero-oauth" options="-parameters" />
+      <module name="hzero-platform" options="-parameters" />
+      <module name="hzero-plugin-parent" options="" />
+      <module name="hzero-register" options="-parameters" />
+      <module name="hzero-report" options="-parameters" />
+      <module name="hzero-scheduler" options="-parameters" />
+      <module name="hzero-starter-apollo-config" options="-parameters" />
+      <module name="hzero-starter-call-core" options="-parameters" />
+      <module name="hzero-starter-call-jingdong" options="-parameters" />
+      <module name="hzero-starter-config-client" options="-parameters" />
+      <module name="hzero-starter-core" options="-parameters" />
+      <module name="hzero-starter-dynamic-route" options="-parameters" />
+      <module name="hzero-starter-excel" options="-parameters" />
+      <module name="hzero-starter-export" options="-parameters" />
+      <module name="hzero-starter-feign-replay" options="-parameters" />
+      <module name="hzero-starter-file-aliyun" options="-parameters" />
+      <module name="hzero-starter-file-aws" options="-parameters" />
+      <module name="hzero-starter-file-azure" options="-parameters" />
+      <module name="hzero-starter-file-bos" options="-parameters" />
+      <module name="hzero-starter-file-ceph" options="-parameters" />
+      <module name="hzero-starter-file-core" options="-parameters" />
+      <module name="hzero-starter-file-cos" options="-parameters" />
+      <module name="hzero-starter-file-jdcloud" options="-parameters" />
+      <module name="hzero-starter-file-minio" options="-parameters" />
+      <module name="hzero-starter-file-obs" options="-parameters" />
+      <module name="hzero-starter-file-parent" options="" />
+      <module name="hzero-starter-fragment" options="-parameters" />
+      <module name="hzero-starter-integrate-core" options="-parameters" />
+      <module name="hzero-starter-integrate-dd" options="-parameters" />
+      <module name="hzero-starter-integrate-wechat-enterprise" options="-parameters" />
+      <module name="hzero-starter-integrate-wechat-official" options="-parameters" />
+      <module name="hzero-starter-jdbc" options="-parameters" />
+      <module name="hzero-starter-keyencrypt" options="-parameters" />
+      <module name="hzero-starter-local-feign" options="-parameters" />
+      <module name="hzero-starter-lock" options="-parameters" />
+      <module name="hzero-starter-metric" options="-parameters" />
+      <module name="hzero-starter-mybatis-mapper" options="-parameters" />
+      <module name="hzero-starter-redis" options="-parameters" />
+      <module name="hzero-starter-register-event" options="-parameters" />
+      <module name="hzero-starter-seata" options="-parameters" />
+      <module name="hzero-starter-sms-aliyun" options="-parameters" />
+      <module name="hzero-starter-sms-baidu" options="-parameters" />
+      <module name="hzero-starter-sms-core" options="-parameters" />
+      <module name="hzero-starter-sms-qcloud" options="-parameters" />
+      <module name="hzero-starter-social-apple" options="-parameters" />
+      <module name="hzero-starter-social-core" options="-parameters" />
+      <module name="hzero-starter-social-hippius" options="-parameters" />
+      <module name="hzero-starter-social-parent" options="" />
+      <module name="hzero-starter-social-qq" options="-parameters" />
+      <module name="hzero-starter-social-sina" options="-parameters" />
+      <module name="hzero-starter-social-wechat" options="-parameters" />
+      <module name="hzero-starter-social-wechat-enterprise" options="-parameters" />
+      <module name="hzero-starter-sqlparser" options="-parameters" />
+      <module name="hzero-starter-sso-azure" options="-parameters" />
+      <module name="hzero-starter-sso-cas" options="-parameters" />
+      <module name="hzero-starter-sso-core" options="-parameters" />
+      <module name="hzero-starter-sso-idm" options="-parameters" />
+      <module name="hzero-starter-sso-oauth" options="-parameters" />
+      <module name="hzero-starter-sso-parent" options="" />
+      <module name="hzero-starter-sso-saml" options="-parameters" />
+      <module name="hzero-starter-websocket" options="-parameters" />
+      <module name="hzero-swagger" options="-parameters" />
+      <module name="hzero-template-oauth-main" options="-parameters" />
+      <module name="hzero-template-oauth-slide" options="-parameters" />
+      <module name="hzero-template-parent" options="" />
+      <module name="platform-cusz-saas" options="-parameters" />
+      <module name="platform-hr" options="-parameters" />
+    </option>
+  </component>
+</project>

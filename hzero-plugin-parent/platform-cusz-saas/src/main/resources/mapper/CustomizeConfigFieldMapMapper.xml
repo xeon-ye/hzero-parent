@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeConfigFieldMapMapper">
+
+    <delete id="deleteByConfigFieldIds">
+        delete from hpfm_cusz_config_field_map
+        where config_field_id in
+        <foreach collection="list" index="index" item="configFieldIds" open="(" close=")" separator=",">
+            #{configFieldIds}
+        </foreach>
+    </delete>
+    <select id="selectByFieldIdAndUnitId"
+            resultType="org.hzero.plugin.platform.customize.domain.entity.ConfigFieldMap">
+       select * from hpfm_cusz_config_field_map hccfm
+       join hpfm_cusz_config_field hccf on hccfm.config_field_id = hccf.config_field_id
+       where hccfm.target_field_id = #{fieldId}
+       and hccf.unit_id = #{unitId} and hccf.user_id = -1
+
+    </select>
+
+</mapper>

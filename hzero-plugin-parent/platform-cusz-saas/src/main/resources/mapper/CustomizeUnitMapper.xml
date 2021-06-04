@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeUnitMapper">
+
+    <resultMap id="MenuMap" type="org.hzero.plugin.platform.customize.api.dto.MenuDTO">
+        <id column="id" property="menuId"/>
+        <result column="code" property="menuCode"/>
+        <result column="name" property="menuName"/>
+        <result column="fd_level" property="level"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="type" property="menuType"/>
+        <result column="sort" property="menuSort"/>
+        <result column="h_quick_index" property="quickIndex"/>
+    </resultMap>
+
+    <resultMap id="RelatedUnitMap" type="org.hzero.plugin.platform.customize.api.dto.UnitRelatedDTO">
+        <id property="unitId" column="unit_id"/>
+        <result property="unitCode" column="unit_code"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="unitType" column="unit_type"/>
+        <collection property="unitFields" ofType="org.hzero.plugin.platform.customize.api.dto.UnitFieldCompositeDTO">
+            <id property="modelFieldId" column="model_field_id"/>
+            <result property="modelId" column="model_id"/>
+            <result property="unitFieldCode" column="unit_field_code"/>
+            <result property="unitFieldName" column="unit_field_name"/>
+            <result property="widgetType" column="widget_type"/>
+            <result property="sourceFieldValueCode" column="source_field_value_code"/>
+            <result property="unitFieldId" column="unit_field_id"/>
+        </collection>
+    </resultMap>
+    <!-- 根据条件查询菜单 -->
+    <select id="selectMenuByRoleId" resultMap="MenuMap">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        im.id,
+        im.code,
+        (case when imt.name is not null then imt.name else im.name end ) name,
+        im.fd_level,
+        im.parent_id,
+        im.type,
+        im.sort,
+        im.h_quick_index
+        from iam_menu im
+        left join
+        iam_menu_tl imt on (imt.id = im.id and imt.lang = #{lang})
+        where
+        im.type in ('root', 'dir', 'menu', 'link')
+        and im.h_enabled_flag = 1
+        and im.h_virtual_flag = 0
+        and exists (
+        select 1
+        from iam_menu im_ps
+        join iam_role ir on
+        (ir.fd_level = im_ps.fd_level and ir.is_enabled = 1
+        and ir.id in
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        )
+        left join iam_role_permission irp on (irp.permission_id = im_ps.id and irp.role_id = ir.id and irp.type = 'PS')
+        where im_ps.type in ('ps', 'menu', 'link')
+        and im_ps.h_enabled_flag = 1
+        <!-- 权限集限定查询菜单，如果是菜单且为admin，则可直接查询菜单，不限制是否有权限集 -->
+        and (
+        (im_ps.type = 'ps' and im_ps.h_level_path like concat(im.h_level_path, '|%'))
+        OR
+        ( im_ps.type in ('menu', 'link')
+        and ir.code in ('role/site/default/administrator', 'role/organization/default/administrator')
+        and (im_ps.h_level_path like concat(im.h_level_path, '|%') or im_ps.h_level_path = im.h_level_path)
+        )
+        )
+        <!-- 平台层展示标准菜单(tenant_id=0), 租户层展示标准菜单及个性化菜单 -->
+        and (im.h_tenant_id = 0 or im.h_tenant_id = ir.h_tenant_id)
+        <!-- 限制层级 -->
+        and im.fd_level = ir.fd_level
+        <!-- 平台管理员&租户管理员不限制权限集，否则限制权限集 -->
+        and (
+        ir.code in ('role/site/default/administrator', 'role/organization/default/administrator')
+        or (irp.h_create_flag = 'Y' or irp.h_inherit_flag = 'Y')
+        )
+        )
+    </select>
+
+    <!-- 根据条件查询菜单 -->
+    <select id="selectAllMenus" resultMap="MenuMap">
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
+        select
+        im.id,
+        im.code,
+        (case when imt.name is not null then imt.name else im.name end ) name,
+        im.fd_level,
+        im.parent_id,
+        im.type,
+        im.sort,
+        im.h_quick_index
+        from iam_menu im
+        left join
+        iam_menu_tl imt on (imt.id = im.id and imt.lang = #{lang})
+        where
+        im.type in ('root', 'dir', 'menu', 'link')
+        and im.h_enabled_flag = 1
+        and im.h_virtual_flag = 0
+        and im.h_tenant_id = 0
+        and im.fd_level = 'organization'
+        <!-- 平台层展示标准菜单(tenant_id=0), 租户层展示标准菜单及个性化菜单 -->
+        <!--        <if test="tenantId != null">-->
+        <!--            and (im.h_tenant_id = 0 or im.h_tenant_id = #{tenantId})-->
+        <!--        </if>-->
+    </select>
+
+    <select id="selectUnitWithConfigById" resultType="org.hzero.plugin.platform.customize.domain.entity.Unit">
+        select
+        hcu.*,
+        hcu.form_max_col ,
+        hcc.unit_title "config.unit_title",
+        hcu.read_only "config.read_only",
+        hcc.id "config.id"
+        from
+        hpfm_cusz_unit hcu
+        left join hpfm_cusz_config hcc on ( hcc.unit_id=hcu.id and hcc.tenant_id=#{tenantId} and hcc.user_id = -1 )
+        where
+        hcu.id=#{unitId}
+    </select>
+    <select id="selectByOptions" resultType="org.hzero.plugin.platform.customize.domain.entity.Unit">
+        select
+        hcu.id,
+        hcu.unit_code,
+        hcu.unit_type,
+        hcug.group_menu_code menu_code,
+        hcu.model_id,
+        hcu.unit_name,
+        hcu.sql_ids,
+        hcu.form_max_col,
+        hcu.label_col,
+        hcu.wrapper_col,
+        hcu.enable_flag,
+        hcu.con_related_unit,
+        hcu.object_version_number,
+        im.name menu_name,
+        hcug.unit_group_id,
+        hcug.group_code unitGroupCode,
+        hcug.group_name unitGroupName
+        from
+        hpfm_cusz_unit hcu
+        join hpfm_cusz_unit_group hcug on hcug.unit_group_id = hcu.unit_group_id
+        join iam_menu im on im.code=hcug.group_menu_code
+        <where>
+            <if test="unitGroupId!=null ">
+                and hcu.unit_group_id = #{unitGroupId}
+            </if>
+            <if test="unitCode!=null and ''!=unitCode">
+                <bind name="unitCodeLike" value="'%'+unitCode+'%'"/>
+                and hcu.unit_code like #{unitCodeLike}
+            </if>
+            <if test="unitName!=null and ''!=unitName">
+                <bind name="unitNameLike" value="'%'+unitName+'%'"/>
+                and hcu.unit_name like #{unitNameLike}
+            </if>
+            <if test="unitType!=null and ''!=unitType">
+                <bind name="unitTypeLike" value="'%'+unitType+'%'"/>
+                and hcu.unit_type like #{unitTypeLike}
+            </if>
+            <if test="menuCode!=null and ''!=menuCode">
+                <bind name="menuCodeLike" value="'%'+menuCode+'%'"/>
+                and hcug.group_menu_code like #{menuCodeLike}
+            </if>
+            <if test="modelId!=null ">
+                and hcu.model_id = #{modelId}
+            </if>
+        </where>
+        order by hcu.unit_code asc
+    </select>
+    <select id="selectById" resultType="org.hzero.plugin.platform.customize.domain.entity.Unit">
+        select
+        hcu.id,
+        hcu.unit_code,
+        hcu.unit_type,
+        hcug.group_menu_code menu_code,
+        hcu.model_id,
+        hcu.unit_name,
+        hcu.sql_ids,
+        hcu.read_only,
+        hcu.form_max_col,
+        hcu.object_version_number,
+        hcu.label_col,
+        hcu.wrapper_col,
+        hcu.enable_flag,
+        hcu.con_related_unit,
+        im.name menu_name,
+        hcug.unit_group_id,
+        hcug.group_code unitGroupCode,
+        hcug.group_name unitGroupName
+        from
+        hpfm_cusz_unit hcu
+        join hpfm_cusz_unit_group hcug on hcug.unit_group_id = hcu.unit_group_id
+        join iam_menu im on im.code=hcug.group_menu_code
+        where hcu.id = #{unitId}
+    </select>
+    <select id="selectUnitConfigByCode" resultType="org.hzero.plugin.platform.customize.api.dto.UnitConfigDTO">
+        select
+        hcu.id "unit_id",
+        hcu.unit_code,
+        hcu.unit_type,
+        hcu.form_max_col "max_col",
+        hcc.unit_title,
+        hcu.label_col,
+        hcu.wrapper_col,
+        hcu.enable_flag,
+        hcu.read_only
+        from
+        hpfm_cusz_unit hcu
+        left join hpfm_cusz_config hcc on (hcu.id = hcc.unit_id and hcc.tenant_id = #{tenantId})
+        where hcu.unit_code = #{unitCode}
+    </select>
+
+    <select id="selectRelatedUnit" resultMap="RelatedUnitMap">
+        select
+        hcu.id unit_id,
+        hcu.unit_code,
+        hcu.unit_name,
+        hcu.unit_type,
+        hcuf.field_id model_field_id,
+        hcuf.model_id model_id,
+        hcuf.id unit_field_id,
+        hcuf.field_name unit_field_name,
+        hcuf.field_code unit_field_code,
+        hcmfw.field_widget widget_type,
+        hcmfw.source_code source_field_value_code
+        from
+        hpfm_cusz_unit hcu
+        left join hpfm_cusz_unit_field hcuf on hcuf.unit_id=hcu.id and hcuf.model_id!=-1 and hcuf.field_id!=-1
+        left join hpfm_cusz_model_field_wdg hcmfw on hcmfw.field_id=hcuf.field_id
+        where hcu.enable_flag=1 and hcu.unit_code in
+        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </select>
+    <select id="selectUnitAndModelTable" resultType="org.hzero.plugin.platform.customize.domain.entity.Unit">
+         select
+        hcu.id,
+        hcu.unit_code,
+        hcu.unit_type,
+        hcu.model_id,
+        hcu.sql_ids,
+        hcu.read_only,
+        hcu.enable_flag,
+        hcu.con_related_unit,
+        hmop.ref_table_name "modelTable"
+        from
+        hpfm_cusz_unit hcu
+        join hmde_model_object_pub hmop on hmop.id = hcu.model_id
+        where hcu.id = #{unitId}
+    </select>
+
+
+</mapper>

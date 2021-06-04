@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.plugin.platform.customize.infra.mapper.CustomizeUnitGroupMapper">
+
+    <resultMap id="unitGroupAndUnitsResultMap" type="org.hzero.plugin.platform.customize.domain.entity.UnitGroup">
+        <id column="unit_group_id" property="unitGroupId"/>
+        <result column="group_code" property="groupCode"/>
+        <result column="group_name" property="groupName"/>
+        <collection property="units" ofType="org.hzero.plugin.platform.customize.domain.entity.Unit">
+            <id column="id" property="id"/>
+            <result column="unit_code" property="unitCode"/>
+            <result column="unit_name" property="unitName"/>
+            <result column="unit_type" property="unitType"/>
+            <result column="enable_flag" property="enableFlag"/>
+        </collection>
+    </resultMap>
+    <select id="selectGroupAndUnits" resultMap="unitGroupAndUnitsResultMap">
+        select
+        hcug.unit_group_id,hcug.group_code,hcug.group_name,
+        hcu.id,hcu.unit_code,hcu.unit_name,hcu.unit_type, hcu.enable_flag
+        from hpfm_cusz_unit_group hcug
+        left join hpfm_cusz_unit hcu on hcug.unit_group_id = hcu.unit_group_id
+        where hcug.group_menu_code = #{menuCode}
+
+    </select>
+
+
+</mapper>
